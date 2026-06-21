@@ -3,575 +3,709 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Metra Network – Support Informatique & Solutions Réseau</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Metra Network – Mhamadi Nayb</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:      #07101f;
+  --sidebar: #080e1c;
+  --panel:   #0a1526;
+  --card:    #0d1b30;
+  --card2:   #0f1f38;
+  --blue:    #1a6ef5;
+  --cyan:    #00b8e6;
+  --white:   #deeaff;
+  --gray:    #6478a0;
+  --gray-l:  #8999bf;
+  --border:  rgba(100,150,220,.13);
+  --border2: rgba(100,150,220,.22);
+  --accent:  rgba(0,184,230,.09);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);display:flex}
 
-  :root {
-    --bg-deep:    #080d1a;
-    --bg-card:    #0f1729;
-    --bg-card2:   #131d35;
-    --blue:       #1a7ef5;
-    --cyan:       #00d4ff;
-    --cyan-dim:   rgba(0,212,255,0.12);
-    --white:      #f0f6ff;
-    --gray:       #8a9bbf;
-    --border:     rgba(0,212,255,0.15);
-  }
+/* SIDEBAR */
+#sidebar{
+  width:70px;background:var(--sidebar);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;
+  padding:1rem 0;gap:.2rem;flex-shrink:0;z-index:10;
+}
+.sb-logo{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.1rem;font-family:'Outfit',sans-serif;
+  font-size:.65rem;font-weight:700;color:#fff;text-align:center;
+  line-height:1.2;overflow:hidden;cursor:pointer;
+}
+.sb-logo img{width:100%;height:100%;object-fit:contain;display:none}
+.sb-logo-text{padding:4px;font-size:.6rem}
+.sb-divider{width:34px;height:1px;background:var(--border);margin:.4rem 0}
+.sb-btn{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;background:transparent;
+  position:relative;transition:background .18s;color:var(--gray);
+}
+.sb-btn:hover{background:var(--accent);color:var(--cyan)}
+.sb-btn.active{background:rgba(0,184,230,.15);color:var(--cyan)}
+.sb-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.sb-tooltip{
+  position:absolute;left:calc(100% + 12px);
+  background:var(--card2);border:1px solid var(--border2);color:var(--white);
+  font-size:.75rem;font-weight:500;white-space:nowrap;
+  padding:.3rem .7rem;border-radius:6px;
+  pointer-events:none;opacity:0;transition:opacity .15s;z-index:200;
+}
+.sb-btn:hover .sb-tooltip{opacity:1}
+.sb-spacer{flex:1}
+.sb-cta{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;transition:opacity .2s,transform .2s;
+}
+.sb-cta:hover{opacity:.85;transform:scale(1.05)}
+.sb-cta svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
-  html { scroll-behavior: smooth; }
+/* MAIN */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg-deep);
-    color: var(--white);
-    overflow-x: hidden;
-  }
+/* TOPBAR */
+#topbar{
+  height:54px;border-bottom:1px solid var(--border);background:var(--panel);
+  display:flex;align-items:center;padding:0 2rem;gap:1.2rem;flex-shrink:0;
+}
+.tb-brand{font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:700}
+.tb-brand span{color:var(--cyan)}
+.tb-sep{color:var(--border2);font-size:1.1rem}
+.tb-page{font-size:.8rem;color:var(--gray);font-weight:400}
+.tb-spacer{flex:1}
+.tb-badge{
+  display:flex;align-items:center;gap:.45rem;
+  background:rgba(26,110,245,.13);border:1px solid rgba(26,110,245,.3);
+  border-radius:20px;padding:.25rem .85rem;
+  font-size:.73rem;font-weight:500;color:#7eb8ff;
+}
+.tb-badge::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.tb-time{font-size:.72rem;color:var(--gray)}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 6vw;
-    height: 68px;
-    background: rgba(8,13,26,0.85);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.55rem; font-weight: 700; letter-spacing: .04em;
-    color: var(--white);
-  }
-  .nav-logo span { color: var(--cyan); }
-  nav ul { list-style: none; display: flex; gap: 2rem; }
-  nav ul a {
-    font-family: 'Inter', sans-serif;
-    font-size: .85rem; font-weight: 500; letter-spacing: .06em;
-    text-transform: uppercase; text-decoration: none;
-    color: var(--gray); transition: color .2s;
-  }
-  nav ul a:hover { color: var(--cyan); }
-  .nav-cta {
-    background: transparent;
-    border: 1px solid var(--cyan);
-    color: var(--cyan) !important;
-    padding: .4rem 1.1rem;
-    border-radius: 4px;
-    transition: background .2s, color .2s !important;
-  }
-  .nav-cta:hover { background: var(--cyan); color: var(--bg-deep) !important; }
+/* TABS */
+#tabs{
+  display:flex;border-bottom:1px solid var(--border);
+  background:var(--panel);padding:0 2rem;flex-shrink:0;
+}
+.tab{
+  padding:.65rem 1rem;font-size:.8rem;font-weight:500;
+  color:var(--gray);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .18s,border-color .18s;white-space:nowrap;
+}
+.tab:hover{color:var(--white)}
+.tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
 
-  /* ── HERO ── */
-  #hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex; align-items: center;
-    padding: 0 6vw;
-    overflow: hidden;
-  }
-  #network-canvas {
-    position: absolute; inset: 0; z-index: 0;
-    opacity: .55;
-  }
-  .hero-inner {
-    position: relative; z-index: 1;
-    max-width: 680px;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: var(--cyan-dim);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: .35rem 1rem;
-    font-size: .75rem; font-weight: 600; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--cyan);
-    margin-bottom: 1.6rem;
-  }
-  .hero-badge::before {
-    content: ''; width: 6px; height: 6px;
-    border-radius: 50%; background: var(--cyan);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: .4; transform: scale(1.5); }
-  }
-  .hero-inner h1 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    font-weight: 700; line-height: 1.05;
-    letter-spacing: -.01em;
-  }
-  .hero-inner h1 em {
-    font-style: normal;
-    background: linear-gradient(90deg, var(--blue), var(--cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero-sub {
-    margin-top: 1.2rem;
-    font-size: 1.05rem; color: var(--gray);
-    line-height: 1.65; max-width: 520px;
-  }
-  .hero-diploma {
-    margin-top: 1.8rem;
-    display: inline-flex; align-items: center; gap: .75rem;
-    background: rgba(26,126,245,0.1);
-    border: 1px solid rgba(26,126,245,0.3);
-    border-radius: 8px;
-    padding: .65rem 1.2rem;
-    font-size: .82rem; color: #7eb8ff;
-  }
-  .hero-diploma svg { flex-shrink: 0; }
-  .hero-actions {
-    margin-top: 2.4rem;
-    display: flex; gap: 1rem; flex-wrap: wrap;
-  }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    color: #fff; font-weight: 600; font-size: .92rem;
-    padding: .85rem 1.8rem; border-radius: 6px;
-    text-decoration: none; transition: opacity .2s, transform .2s;
-  }
-  .btn-primary:hover { opacity: .88; transform: translateY(-2px); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: .5rem;
-    background: transparent;
-    color: var(--white); font-weight: 500; font-size: .92rem;
-    padding: .85rem 1.8rem; border-radius: 6px;
-    border: 1px solid var(--border);
-    text-decoration: none; transition: border-color .2s, background .2s;
-  }
-  .btn-secondary:hover { border-color: var(--cyan); background: var(--cyan-dim); }
+/* CONTENT */
+#content{flex:1;overflow-y:auto;padding:1.8rem;scroll-behavior:smooth}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 
-  /* ── SECTIONS COMMUNES ── */
-  section { padding: 6rem 6vw; }
-  .section-label {
-    font-size: .7rem; font-weight: 700; letter-spacing: .15em;
-    text-transform: uppercase; color: var(--cyan);
-    margin-bottom: .6rem;
-  }
-  .section-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 700; line-height: 1.1;
-  }
-  .section-title span { color: var(--cyan); }
-  .section-desc {
-    margin-top: .8rem;
-    color: var(--gray); font-size: .95rem; line-height: 1.7;
-    max-width: 520px;
-  }
+.panel{display:none}
+.panel.active{display:block}
 
-  /* ── ABOUT ── */
-  #about {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-    align-items: center;
-  }
-  .about-stats {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-    border: 1px solid var(--border);
-    border-radius: 12px; overflow: hidden;
-    margin-top: 2rem;
-  }
-  .stat {
-    padding: 1.4rem 1.6rem;
-    background: var(--bg-card);
-  }
-  .stat:not(:last-child) { border-right: 1px solid var(--border); }
-  .stat-num {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 2.2rem; font-weight: 700; color: var(--cyan);
-  }
-  .stat-lbl { font-size: .75rem; color: var(--gray); margin-top: .1rem; }
+/* ── Composants communs ── */
+.page-title{font-family:'Outfit',sans-serif;font-size:1.5rem;font-weight:700}
+.page-title span{color:var(--cyan)}
+.page-sub{color:var(--gray);font-size:.85rem;margin-top:.3rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.5rem}
+.card-title{font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:600;color:var(--gray-l);margin-bottom:1rem}
+.btn-p{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;font-weight:600;font-size:.85rem;
+  padding:.65rem 1.4rem;border-radius:7px;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:opacity .18s,transform .18s;
+}
+.btn-p:hover{opacity:.85;transform:translateY(-2px)}
+.btn-s{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:transparent;color:var(--white);
+  font-weight:500;font-size:.85rem;
+  padding:.65rem 1.4rem;border-radius:7px;
+  border:1px solid var(--border2);
+  text-decoration:none;cursor:pointer;
+  transition:border-color .18s,background .18s;
+}
+.btn-s:hover{border-color:var(--cyan);background:var(--accent)}
 
-  .about-visual {
-    position: relative;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.5rem;
-    overflow: hidden;
-  }
-  .about-visual::before {
-    content: '';
-    position: absolute; top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(0,212,255,.18) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .profile-name {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.8rem; font-weight: 700;
-  }
-  .profile-role { color: var(--cyan); font-size: .9rem; font-weight: 500; margin-top: .2rem; }
-  .profile-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
-  .tag {
-    background: var(--cyan-dim);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: .25rem .75rem;
-    font-size: .75rem; color: var(--cyan); font-weight: 500;
-  }
-  .profile-bio { margin-top: 1.4rem; color: var(--gray); font-size: .88rem; line-height: 1.7; }
+/* ── ACCUEIL ── */
+.hero{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:2.2rem 2.4rem 2rem;
+  position:relative;overflow:hidden;margin-bottom:1.3rem;
+}
+.hero::after{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(0,184,230,.1) 0%,transparent 65%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-label{
+  font-size:.72rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:.8rem;
+}
+.hero h1{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(1.9rem,3.2vw,2.8rem);
+  font-weight:700;line-height:1.1;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{margin-top:.9rem;color:var(--gray-l);font-size:.9rem;line-height:1.7;max-width:540px}
+.hero-diploma{
+  margin-top:1.2rem;display:inline-flex;align-items:center;gap:.6rem;
+  background:rgba(26,110,245,.1);border:1px solid rgba(26,110,245,.28);
+  border-radius:8px;padding:.5rem 1rem;font-size:.8rem;color:#7eb8ff;
+}
+.hero-actions{display:flex;gap:.8rem;margin-top:1.6rem;flex-wrap:wrap}
 
-  /* ── SERVICES ── */
-  #services { background: var(--bg-card2); }
-  .services-header { margin-bottom: 3rem; }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.2rem;
-  }
-  .service-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.8rem;
-    transition: border-color .25s, transform .25s;
-    cursor: default;
-  }
-  .service-card:hover {
-    border-color: var(--cyan);
-    transform: translateY(-4px);
-  }
-  .service-icon {
-    width: 46px; height: 46px;
-    background: var(--cyan-dim);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.1rem;
-    font-size: 1.3rem;
-  }
-  .service-card h3 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem; font-weight: 700;
-    letter-spacing: .02em;
-    margin-bottom: .5rem;
-  }
-  .service-card p { font-size: .83rem; color: var(--gray); line-height: 1.65; }
+.stat-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:11px;overflow:hidden;
+  margin-bottom:1.3rem;
+}
+.stat-cell{background:var(--card);padding:1.1rem 1.3rem}
+.stat-n{font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:700;color:var(--cyan)}
+.stat-l{font-size:.72rem;color:var(--gray);margin-top:.05rem}
 
-  /* ── WHY ── */
-  #why .why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 3rem;
-  }
-  .why-item {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.6rem 1.4rem;
-    text-align: center;
-  }
-  .why-icon { font-size: 1.8rem; margin-bottom: .8rem; }
-  .why-item h4 {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .04em;
-    margin-bottom: .4rem;
-  }
-  .why-item p { font-size: .78rem; color: var(--gray); line-height: 1.6; }
+.home-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem}
 
-  /* ── CONTACT ── */
-  #contact {
-    background: var(--bg-card2);
-    text-align: center;
-  }
-  #contact .section-desc { margin: .8rem auto 0; text-align: center; }
-  .contact-box {
-    margin: 2.8rem auto 0;
-    max-width: 540px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2.4rem;
-  }
-  .contact-links { display: flex; flex-direction: column; gap: .9rem; }
-  .contact-link {
-    display: flex; align-items: center; gap: 1rem;
-    background: var(--bg-deep);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: .9rem 1.2rem;
-    text-decoration: none;
-    color: var(--white);
-    font-size: .88rem;
-    transition: border-color .2s, background .2s;
-  }
-  .contact-link:hover { border-color: var(--cyan); background: var(--cyan-dim); }
-  .contact-link .cl-icon { font-size: 1.1rem; }
-  .contact-link .cl-label { color: var(--gray); font-size: .72rem; display: block; }
-  .contact-link .cl-value { font-weight: 500; }
-  .contact-cta { margin-top: 1.4rem; width: 100%; justify-content: center; }
+.skill-list{display:flex;flex-direction:column;gap:.65rem}
+.skill-row{display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--gray-l)}
+.skill-name{min-width:150px;font-size:.8rem}
+.skill-track{flex:1;height:3px;background:var(--border2);border-radius:2px;overflow:hidden}
+.skill-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:2px}
 
-  /* ── FOOTER ── */
-  footer {
-    padding: 1.5rem 6vw;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: .75rem; color: var(--gray);
-  }
-  footer strong { color: var(--cyan); }
+.qlinks{display:flex;flex-direction:column;gap:.55rem}
+.qlink{
+  display:flex;align-items:center;gap:.7rem;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:8px;padding:.65rem .9rem;
+  color:var(--white);font-size:.82rem;font-weight:500;
+  cursor:pointer;transition:border-color .18s,background .18s;
+}
+.qlink:hover{border-color:var(--cyan);background:var(--accent)}
+.qlink-ic{width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  background:var(--accent);border-radius:6px;font-size:.85rem;flex-shrink:0}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    #about { grid-template-columns: 1fr; gap: 2.5rem; }
-    nav ul { display: none; }
-  }
+/* ── SERVICES ── */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.svc-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem;
+  transition:border-color .2s,transform .2s;
+}
+.svc-card:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.svc-card.hl{border-color:rgba(26,110,245,.35);background:linear-gradient(135deg,var(--card),rgba(26,110,245,.07))}
+.svc-icon{
+  width:42px;height:42px;border-radius:9px;
+  background:var(--accent);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;margin-bottom:.9rem;
+}
+.svc-category{font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cyan);margin-bottom:.3rem}
+.svc-card h3{font-family:'Outfit',sans-serif;font-size:.98rem;font-weight:600;margin-bottom:.45rem}
+.svc-card p{font-size:.8rem;color:var(--gray);line-height:1.65}
+.svc-list{margin-top:.85rem;display:flex;flex-direction:column;gap:.3rem}
+.svc-list-item{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.76rem;color:var(--gray-l);
+}
+.svc-list-item::before{content:'✓';color:var(--cyan);font-size:.68rem;font-weight:700}
+
+.info-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem 1.5rem;margin-top:1.2rem;
+}
+.info-box h3{font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:1rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.info-col h4{font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--gray);margin-bottom:.55rem}
+.check-list{display:flex;flex-direction:column;gap:.3rem}
+.check-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray-l)}
+.check-item::before{content:'✓';color:var(--cyan);font-size:.68rem;font-weight:700;flex-shrink:0}
+.req-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--gray-l)}
+.req-item .ri{font-size:.85rem}
+.info-note{
+  margin-top:.9rem;background:rgba(0,184,230,.06);border:1px solid var(--border);
+  border-radius:7px;padding:.65rem .9rem;font-size:.75rem;color:var(--gray);line-height:1.6;
+}
+
+/* ── ZONE ── */
+.zone-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.zone-card,.hours-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.4rem;
+}
+.zone-card h3,.hours-card h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.35rem}
+.zone-cat{font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cyan);margin-bottom:.55rem}
+.zone-card p{font-size:.8rem;color:var(--gray);line-height:1.65}
+.zone-hi{color:var(--cyan);font-weight:600}
+.hours-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.55rem 0;border-bottom:1px solid var(--border);font-size:.82rem;
+}
+.hours-row:last-of-type{border:none}
+.hours-type{color:var(--gray-l);font-weight:500}
+.hours-time{font-size:.8rem;color:var(--cyan);text-align:right}
+.hours-note{font-size:.72rem;color:var(--gray);margin-top:.45rem;line-height:1.6}
+
+.why-section{margin-top:1.5rem}
+.why-section .page-title{font-size:1.1rem}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1rem}
+.why-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.1rem;text-align:center;
+}
+.why-ic{font-size:1.5rem;margin-bottom:.5rem}
+.why-card h4{font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;margin-bottom:.3rem}
+.why-card p{font-size:.73rem;color:var(--gray);line-height:1.6}
+
+/* ── À PROPOS ── */
+.about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:1.2rem;margin-top:1.4rem}
+.profile-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.6rem;
+}
+.avatar{
+  width:64px;height:64px;border-radius:12px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;font-size:1.3rem;font-weight:700;
+  color:#fff;margin-bottom:1rem;overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover;display:none}
+.pname{font-family:'Outfit',sans-serif;font-size:1.25rem;font-weight:700}
+.prole{color:var(--cyan);font-size:.82rem;font-weight:500;margin-top:.15rem}
+.pdiploma{
+  margin:.85rem 0;background:rgba(26,110,245,.1);border:1px solid rgba(26,110,245,.25);
+  border-radius:7px;padding:.6rem .95rem;font-size:.78rem;color:#7eb8ff;line-height:1.55;
+}
+.pbio{font-size:.81rem;color:var(--gray);line-height:1.7;margin-top:.75rem}
+
+.skills-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+}
+.skills-section{margin-bottom:1.1rem}
+.skills-section:last-child{margin-bottom:0}
+.skills-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gray);margin-bottom:.55rem}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{
+  background:var(--accent);border:1px solid var(--border);
+  border-radius:5px;padding:.22rem .65rem;
+  font-size:.73rem;color:var(--cyan);font-weight:500;
+}
+.cert-item{
+  display:flex;align-items:center;gap:.65rem;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:7px;padding:.65rem .9rem;
+  font-size:.8rem;margin-top:.4rem;
+}
+.cert-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);flex-shrink:0}
+
+/* ── CONTACT ── */
+.contact-wrap{max-width:600px}
+.contact-links{display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.2rem}
+.c-link{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:.9rem 1.2rem;
+  text-decoration:none;color:var(--white);
+  transition:border-color .18s,background .18s;
+}
+.c-link:hover{border-color:var(--cyan);background:var(--accent)}
+.c-icon{
+  width:38px;height:38px;border-radius:8px;
+  background:var(--accent);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+}
+.c-label{font-size:.7rem;color:var(--gray);display:block;margin-bottom:.1rem;text-transform:uppercase;letter-spacing:.04em;font-weight:500}
+.c-value{font-weight:500;font-size:.87rem}
+.devis-box{
+  background:linear-gradient(135deg,rgba(26,110,245,.14),rgba(0,184,230,.07));
+  border:1px solid rgba(0,184,230,.22);border-radius:12px;padding:1.4rem;
+}
+.devis-box h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.35rem}
+.devis-box p{font-size:.82rem;color:var(--gray);line-height:1.65;margin-bottom:1rem}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .home-grid,.about-grid,.zone-grid,.info-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  html,body{overflow:auto}
+  #sidebar{display:none}
+  #tabs{overflow-x:auto}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">METRA <span>NETWORK</span></div>
-  <ul>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#why">Pourquoi moi</a></li>
-    <li><a href="#contact" class="nav-cta">Contact</a></li>
-  </ul>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sb-logo" onclick="showPanel('home')">
+    <img id="logo-img" src="" alt="Logo">
+    <div class="sb-logo-text" id="logo-text">MN</div>
+  </div>
+  <div class="sb-divider"></div>
+  <button class="sb-btn active" data-panel="home" onclick="showPanel('home')">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="sb-tooltip">Accueil</span>
+  </button>
+  <button class="sb-btn" data-panel="services" onclick="showPanel('services')">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    <span class="sb-tooltip">Services</span>
+  </button>
+  <button class="sb-btn" data-panel="zone" onclick="showPanel('zone')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    <span class="sb-tooltip">Zone & Horaires</span>
+  </button>
+  <button class="sb-btn" data-panel="about" onclick="showPanel('about')">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="sb-tooltip">À propos</span>
+  </button>
+  <div class="sb-spacer"></div>
+  <button class="sb-cta" onclick="showPanel('contact')" title="Contact">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
-  <canvas id="network-canvas"></canvas>
-  <div class="hero-inner">
-    <div class="hero-badge">Disponible · Marseille & alentours</div>
-    <h1>Votre informatique,<br><em>notre expertise.</em></h1>
-    <p class="hero-sub">Dépannage, conseils, réseaux et serveurs sur mesure pour particuliers et professionnels. Une approche humaine et technique au service de votre infrastructure.</p>
-    <div class="hero-diploma">
-      <svg width="18" height="18" fill="none" stroke="#7eb8ff" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      Diplômé BTS SIO SISR (BAC+2) · Technicien Systèmes & Réseaux – Lycée Victor Hugo, Marseille
-    </div>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Demander un devis gratuit
-      </a>
-      <a href="#services" class="btn-secondary">Voir mes services →</a>
-    </div>
-  </div>
-</section>
+<!-- MAIN -->
+<div id="main">
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-left">
-    <p class="section-label">À propos</p>
-    <h2 class="section-title">Technicien passionné,<br><span>résultats concrets.</span></h2>
-    <p class="section-desc">Depuis mes premières configurations réseau jusqu'à l'obtention de mon BTS SIO SISR, j'ai toujours mis la technique au service des gens. Je propose des interventions claires, rapides et sans jargon inutile.</p>
-    <div class="about-stats">
-      <div class="stat">
-        <div class="stat-num">24h</div>
-        <div class="stat-lbl">Réponse garantie</div>
+  <!-- TOPBAR -->
+  <header id="topbar">
+    <div class="tb-brand">METRA <span>NETWORK</span></div>
+    <span class="tb-sep">/</span>
+    <div class="tb-page" id="tb-page">Accueil</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-badge">BTS SIO SISR – Diplômé</div>
+    <div class="tb-time" id="tb-time"></div>
+  </header>
+
+  <!-- TABS -->
+  <div id="tabs">
+    <div class="tab active" data-panel="home" onclick="showPanel('home')">Accueil</div>
+    <div class="tab" data-panel="services" onclick="showPanel('services')">Services</div>
+    <div class="tab" data-panel="zone" onclick="showPanel('zone')">Zone & Horaires</div>
+    <div class="tab" data-panel="about" onclick="showPanel('about')">À propos</div>
+    <div class="tab" data-panel="contact" onclick="showPanel('contact')">Contact</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- ACCUEIL -->
+    <div class="panel active" id="panel-home">
+      <div class="hero">
+        <div class="hero-label">Support informatique & Solutions réseau – Marseille</div>
+        <h1>Votre informatique,<br><em>notre expertise.</em></h1>
+        <p class="hero-sub">Dépannage, réseaux, serveurs et cybersécurité sur mesure pour particuliers et professionnels. Des solutions fiables, sécurisées et adaptées à vos besoins.</p>
+        <div class="hero-diploma">
+          🎓 Diplômé BTS SIO SISR (BAC+2) · Technicien Systèmes & Réseaux – Lycée Victor Hugo, Marseille
+        </div>
+        <div class="hero-actions">
+          <button class="btn-p" onclick="showPanel('contact')">Devis gratuit</button>
+          <button class="btn-s" onclick="showPanel('services')">Voir mes services</button>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num">100%</div>
-        <div class="stat-lbl">Satisfaction client</div>
+
+      <div class="stat-row">
+        <div class="stat-cell"><div class="stat-n">24h</div><div class="stat-l">Réponse garantie</div></div>
+        <div class="stat-cell"><div class="stat-n">0 €</div><div class="stat-l">Devis gratuit</div></div>
+        <div class="stat-cell"><div class="stat-n">6</div><div class="stat-l">Services proposés</div></div>
+        <div class="stat-cell"><div class="stat-n">13</div><div class="stat-l">Bouches-du-Rhône</div></div>
       </div>
-      <div class="stat">
-        <div class="stat-num">0€</div>
-        <div class="stat-lbl">Devis gratuit</div>
+
+      <div class="home-grid">
+        <div class="card">
+          <div class="card-title">Compétences techniques</div>
+          <div class="skill-list">
+            <div class="skill-row"><span class="skill-name">Windows Server & Active Directory</span><div class="skill-track"><div class="skill-fill" style="width:92%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Linux / Debian</span><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Réseaux Cisco</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Virtualisation</span><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
+            <div class="skill-row"><span class="skill-name">Cybersécurité</span><div class="skill-track"><div class="skill-fill" style="width:78%"></div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Accès rapide</div>
+          <div class="qlinks">
+            <div class="qlink" onclick="showPanel('services')"><span class="qlink-ic">💻</span> PC lent & Dépannage</div>
+            <div class="qlink" onclick="showPanel('services')"><span class="qlink-ic">📶</span> Réseau & Connectivité</div>
+            <div class="qlink" onclick="showPanel('services')"><span class="qlink-ic">🖧</span> Serveurs virtuels</div>
+            <div class="qlink" onclick="showPanel('services')"><span class="qlink-ic">🛡️</span> Cybersécurité</div>
+            <div class="qlink" onclick="showPanel('contact')"><span class="qlink-ic">✉️</span> Me contacter</div>
+          </div>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num">13</div>
-        <div class="stat-lbl">Bouches-du-Rhône</div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="panel" id="panel-services">
+      <p class="page-title">Mes <span>services</span></p>
+      <p class="page-sub">Dépannage · Réseaux · Serveurs · Sécurité · Conseils</p>
+      <div class="svc-grid" style="margin-top:1.3rem">
+        <div class="svc-card">
+          <div class="svc-icon">💻</div>
+          <div class="svc-category">Particuliers & Professionnels</div>
+          <h3>PC Lent ?</h3>
+          <p>Diagnostic, nettoyage et optimisation pour redonner rapidité et performance à votre ordinateur.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🔧</div>
+          <div class="svc-category">Logiciel</div>
+          <h3>Dépannage & Logiciel</h3>
+          <p>Résolution de problèmes, installation de logiciels, suppression de virus et d'erreurs système.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🛒</div>
+          <div class="svc-category">Conseil</div>
+          <h3>Conseils & Achat</h3>
+          <p>Je vous accompagne dans le choix du matériel adapté à vos besoins et à votre budget.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">📶</div>
+          <div class="svc-category">Réseau</div>
+          <h3>Réseau : Diagnostic & Dépannage</h3>
+          <p>Diagnostic et dépannage de vos problèmes réseau (Wi-Fi, box, routeur, câblage, connexion…).</p>
+        </div>
+        <div class="svc-card hl">
+          <div class="svc-icon">🖧</div>
+          <div class="svc-category">Entreprises</div>
+          <h3>Serveurs Virtuels sur PC Client</h3>
+          <p>Mise en place de serveurs en machines virtuelles sur un PC compatible avec les prérequis adaptés.</p>
+          <div class="svc-list">
+            <div class="svc-list-item">Serveur de fichiers</div>
+            <div class="svc-list-item">Contrôleur de domaine</div>
+            <div class="svc-list-item">Gestion multi-utilisateurs</div>
+            <div class="svc-list-item">Serveur de sauvegarde & VPN</div>
+            <div class="svc-list-item">Accès à distance sécurisé</div>
+          </div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🛡️</div>
+          <div class="svc-category">Sécurité</div>
+          <h3>Sauvegardes & Cybersécurité</h3>
+          <p>Sauvegardes sécurisées, bonnes pratiques, gestion des mots de passe, protection des données.</p>
+        </div>
+        <div class="svc-card hl">
+          <div class="svc-icon">👥</div>
+          <div class="svc-category">Idéal pour les entreprises</div>
+          <h3>Organisation & Multi-utilisateurs</h3>
+          <p>Gestion de plusieurs utilisateurs, partage de fichiers, droits d'accès et organisation centralisée.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3>Prérequis pour l'installation de serveurs virtuels</h3>
+        <div class="info-grid">
+          <div class="info-col">
+            <h4>Matériel recommandé</h4>
+            <div class="check-list">
+              <div class="req-item"><span class="ri">🔲</span> Processeur 4 cœurs minimum</div>
+              <div class="req-item"><span class="ri">💾</span> 16 Go de RAM minimum</div>
+              <div class="req-item"><span class="ri">⚡</span> SSD recommandé</div>
+              <div class="req-item"><span class="ri">🔌</span> Connexion réseau filaire</div>
+              <div class="req-item"><span class="ri">💿</span> Espace disque adapté au projet</div>
+            </div>
+          </div>
+          <div class="info-col">
+            <h4>Services disponibles</h4>
+            <div class="check-list">
+              <div class="check-item">Serveur de fichiers</div>
+              <div class="check-item">Contrôleur de domaine</div>
+              <div class="check-item">Gestion multi-utilisateurs</div>
+              <div class="check-item">Serveur de sauvegarde</div>
+              <div class="check-item">Serveur VPN</div>
+              <div class="check-item">Accès à distance sécurisé</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-note">Les serveurs sont installés sous forme de machines virtuelles sur un ordinateur compatible appartenant au client. Le matériel serveur physique n'est pas fourni.</div>
       </div>
     </div>
-  </div>
 
-  <div class="about-visual">
-    <div class="profile-name">Mhamadi Nayb</div>
-    <div class="profile-role">Technicien Systèmes & Réseaux · Fondateur Metra Network</div>
-    <div class="profile-tags">
-      <span class="tag">Active Directory</span>
-      <span class="tag">Cisco</span>
-      <span class="tag">Linux / Debian</span>
-      <span class="tag">Windows Server</span>
-      <span class="tag">Virtualisation</span>
-      <span class="tag">Postfix / Dovecot</span>
-      <span class="tag">VLAN / VPN</span>
-      <span class="tag">Cybersécurité</span>
-    </div>
-    <p class="profile-bio">Diplômé du BTS SIO option SISR au Lycée Victor Hugo de Marseille, je maîtrise l'administration système, la configuration réseau et la sécurité informatique. Metra Network, c'est mon engagement personnel : des solutions adaptées, transparentes et durables.</p>
-  </div>
-</section>
+    <!-- ZONE & HORAIRES -->
+    <div class="panel" id="panel-zone">
+      <p class="page-title">Zone d'intervention & <span>Horaires</span></p>
+      <p class="page-sub">Marseille sur site · France entière à distance</p>
+      <div class="zone-grid" style="margin-top:1.3rem">
+        <div class="zone-card">
+          <div class="zone-cat">Sur site</div>
+          <h3>Marseille <span class="zone-hi">uniquement</span></h3>
+          <p>Interventions physiques à domicile ou en entreprise exclusivement sur Marseille. Pour toute intervention hors Marseille, des frais de déplacement sont à prévoir.</p>
+        </div>
+        <div class="zone-card">
+          <div class="zone-cat">À distance</div>
+          <h3>Toute la <span class="zone-hi">France</span></h3>
+          <p>Interventions à distance disponibles partout en France. Prise en main à distance pour logiciels, diagnostic et conseils.</p>
+        </div>
+        <div class="hours-card">
+          <h3>Horaires — À distance</h3>
+          <div class="hours-row">
+            <span class="hours-type">Lundi – Vendredi</span>
+            <span class="hours-time">08h00 – 12h00 · 14h00 – 17h00</span>
+          </div>
+          <p class="hours-note">Prise en main à distance : logiciels, diagnostic, conseils.</p>
+        </div>
+        <div class="hours-card">
+          <h3>Horaires — Sur site <span style="color:var(--cyan)">(Marseille)</span></h3>
+          <div class="hours-row">
+            <span class="hours-type">Interventions continues</span>
+            <span class="hours-time">10h00 – 17h00 non stop</span>
+          </div>
+          <p class="hours-note">Dépannages et grosses interventions : matériel, installation, configuration.</p>
+        </div>
+      </div>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="services-header">
-    <p class="section-label">Mes services</p>
-    <h2 class="section-title">Ce que je peux<br><span>faire pour vous</span></h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">💻</div>
-      <h3>PC Lent & Dépannage</h3>
-      <p>Diagnostic, nettoyage et optimisation pour redonner rapidité et performance à votre ordinateur. Suppression de virus, réinstallation système.</p>
+      <div class="why-section">
+        <p class="page-title">Pourquoi <span>Metra Network</span> ?</p>
+        <div class="why-grid">
+          <div class="why-card"><div class="why-ic">👤</div><h4>Service personnalisé</h4><p>Des solutions adaptées à vos besoins.</p></div>
+          <div class="why-card"><div class="why-ic">⚡</div><h4>Intervention rapide</h4><p>À domicile ou à distance, selon la situation.</p></div>
+          <div class="why-card"><div class="why-ic">🔒</div><h4>Confidentialité</h4><p>Vos données sont traitées avec sérieux et discrétion.</p></div>
+          <div class="why-card"><div class="why-ic">💬</div><h4>Tarifs transparents</h4><p>Devis gratuit, sans surprise.</p></div>
+        </div>
+      </div>
     </div>
-    <div class="service-card">
-      <div class="service-icon">🔧</div>
-      <h3>Installation Logicielle</h3>
-      <p>Installation et configuration de vos logiciels, mises à jour, résolution d'erreurs système. Intervention à distance ou à domicile.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📶</div>
-      <h3>Réseau & Connectivité</h3>
-      <p>Configuration Wi-Fi, box, routeurs et switchs. Câblage réseau, extension de couverture et optimisation de votre connexion internet.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🖥️</div>
-      <h3>Serveurs & Stockage</h3>
-      <p>Installation de serveurs de fichiers, NAS, solutions de sauvegarde automatique. Administration Windows Server et Linux Debian.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🛡️</div>
-      <h3>Cybersécurité</h3>
-      <p>Audit de sécurité, mise en place de pare-feu, sauvegardes chiffrées. Conseils et bonnes pratiques pour sécuriser vos données.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🛒</div>
-      <h3>Conseils & Achat</h3>
-      <p>Je vous accompagne dans le choix du matériel adapté à vos besoins et à votre budget. Ordinateurs, périphériques, équipements réseau.</p>
-    </div>
-  </div>
-</section>
 
-<!-- WHY -->
-<section id="why">
-  <p class="section-label">Pourquoi Metra Network</p>
-  <h2 class="section-title">Des avantages <span>réels</span></h2>
-  <div class="why-grid">
-    <div class="why-item">
-      <div class="why-icon">⚡</div>
-      <h4>Intervention rapide</h4>
-      <p>À domicile ou à distance, je m'adapte à votre situation et à vos horaires.</p>
+    <!-- À PROPOS -->
+    <div class="panel" id="panel-about">
+      <p class="page-title">À propos de <span>Mhamadi Nayb</span></p>
+      <div class="about-grid">
+        <div class="profile-card">
+          <div class="avatar">
+            <img id="profile-img" src="" alt="">
+            <span id="profile-initials">MN</span>
+          </div>
+          <div class="pname">Mhamadi Nayb</div>
+          <div class="prole">Technicien Systèmes & Réseaux · Fondateur Metra Network</div>
+          <div class="pdiploma">
+            🎓 Diplômé BTS SIO option SISR (BAC+2)<br>
+            Lycée Victor Hugo · Marseille
+          </div>
+          <p class="pbio">Passionné par les réseaux et l'administration système, j'ai acquis une solide expertise dans la configuration d'infrastructures Windows Server, Linux Debian, et la sécurisation de réseaux d'entreprise.<br><br>Metra Network est mon projet : proposer des services informatiques sérieux, accessibles et sur mesure aux particuliers et professionnels de la région marseillaise.</p>
+        </div>
+        <div class="skills-card">
+          <div class="skills-section">
+            <div class="skills-label">Systèmes</div>
+            <div class="tag-cloud">
+              <span class="tag">Windows Server 2022</span>
+              <span class="tag">Active Directory</span>
+              <span class="tag">Linux / Debian 12</span>
+              <span class="tag">Windows 10/11</span>
+              <span class="tag">Virtualisation</span>
+            </div>
+          </div>
+          <div class="skills-section">
+            <div class="skills-label">Réseau</div>
+            <div class="tag-cloud">
+              <span class="tag">Cisco</span>
+              <span class="tag">VLAN</span>
+              <span class="tag">VPN</span>
+              <span class="tag">Routage</span>
+              <span class="tag">Wi-Fi</span>
+              <span class="tag">Câblage</span>
+            </div>
+          </div>
+          <div class="skills-section">
+            <div class="skills-label">Services & Protocoles</div>
+            <div class="tag-cloud">
+              <span class="tag">DNS / DHCP</span>
+              <span class="tag">NAS / Sauvegarde</span>
+              <span class="tag">Accès à distance</span>
+              <span class="tag">Messagerie</span>
+            </div>
+          </div>
+          <div class="skills-section">
+            <div class="skills-label">Cybersécurité</div>
+            <div class="tag-cloud">
+              <span class="tag">Pare-feu</span>
+              <span class="tag">Audit sécurité</span>
+              <span class="tag">Chiffrement</span>
+              <span class="tag">Bonnes pratiques</span>
+            </div>
+          </div>
+          <div class="skills-section">
+            <div class="skills-label">Formation</div>
+            <div class="cert-item">
+              <div class="cert-dot"></div>
+              BTS SIO SISR – Lycée Victor Hugo, Marseille
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="why-item">
-      <div class="why-icon">👤</div>
-      <h4>Service personnalisé</h4>
-      <p>Pas de script, pas de centre d'appel. Vous parlez directement au technicien.</p>
-    </div>
-    <div class="why-item">
-      <div class="why-icon">🔒</div>
-      <h4>Confidentialité</h4>
-      <p>Vos données restent entre de bonnes mains. Discrétion et éthique professionnelle garanties.</p>
-    </div>
-    <div class="why-item">
-      <div class="why-icon">💬</div>
-      <h4>Tarifs transparents</h4>
-      <p>Devis gratuit et sans engagement. Aucune surprise sur la facture finale.</p>
-    </div>
-  </div>
-</section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Contact</p>
-  <h2 class="section-title">Besoin d'aide ?<br><span>Contactez-moi !</span></h2>
-  <p class="section-desc">Devis gratuit · Réponse sous 24h · Intervention Marseille & alentours</p>
-  <div class="contact-box">
-    <div class="contact-links">
-      <a href="mailto:metranetwork.pro@gmail.com" class="contact-link">
-        <span class="cl-icon">✉️</span>
-        <span>
-          <span class="cl-label">Email</span>
-          <span class="cl-value">metranetwork.pro@gmail.com</span>
-        </span>
-      </a>
-      <a href="https://instagram.com/metra_network" target="_blank" class="contact-link">
-        <span class="cl-icon">📸</span>
-        <span>
-          <span class="cl-label">Instagram</span>
-          <span class="cl-value">@metra_network</span>
-        </span>
-      </a>
-      <a href="#" class="contact-link">
-        <span class="cl-icon">📍</span>
-        <span>
-          <span class="cl-label">Zone d'intervention</span>
-          <span class="cl-value">Marseille & Bouches-du-Rhône (13)</span>
-        </span>
-      </a>
+    <!-- CONTACT -->
+    <div class="panel" id="panel-contact">
+      <div class="contact-wrap">
+        <p class="page-title">Besoin d'aide ? <span>Contactez-moi !</span></p>
+        <p class="page-sub" style="margin-bottom:1.3rem">Devis gratuit · Réponse sous 24h · Marseille & France entière à distance</p>
+        <div class="contact-links">
+          <a href="mailto:metranetwork.pro@gmail.com" class="c-link">
+            <div class="c-icon">✉️</div>
+            <div><span class="c-label">Email</span><span class="c-value">metranetwork.pro@gmail.com</span></div>
+          </a>
+          <a href="https://instagram.com/metra_network" target="_blank" class="c-link">
+            <div class="c-icon">📸</div>
+            <div><span class="c-label">Instagram</span><span class="c-value">@metra_network</span></div>
+          </a>
+          <div class="c-link" style="cursor:default">
+            <div class="c-icon">📍</div>
+            <div><span class="c-label">Zone d'intervention</span><span class="c-value">Marseille & Bouches-du-Rhône (13) · À distance : France entière</span></div>
+          </div>
+        </div>
+        <div class="devis-box">
+          <h3>Devis gratuit – Réponse sous 24h</h3>
+          <p>Décrivez votre besoin par email ou Instagram, je vous réponds rapidement avec une estimation claire et sans engagement.</p>
+          <a href="mailto:metranetwork.pro@gmail.com" class="btn-p">Envoyer un message</a>
+        </div>
+      </div>
     </div>
-    <a href="mailto:metranetwork.pro@gmail.com" class="btn-primary contact-cta">
-      Envoyer un message →
-    </a>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div>© 2025 <strong>Metra Network</strong> · Mhamadi Nayb</div>
-  <div>Réseau · Performance · Sécurité · Fiabilité</div>
-</footer>
+  </div>
+</div>
 
 <script>
-/* ── Particle network canvas ── */
-const canvas = document.getElementById('network-canvas');
-const ctx = canvas.getContext('2d');
-let nodes = [], W, H;
-
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
+const labels={home:'Accueil',services:'Services',zone:'Zone & Horaires',about:'À propos',contact:'Contact'};
+function showPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab,.sb-btn').forEach(el=>el.classList.remove('active'));
+  const p=document.getElementById('panel-'+name);
+  if(p)p.classList.add('active');
+  document.querySelectorAll('[data-panel="'+name+'"]').forEach(el=>el.classList.add('active'));
+  document.getElementById('tb-page').textContent=labels[name]||name;
+  document.getElementById('content').scrollTop=0;
 }
-resize();
-window.addEventListener('resize', () => { resize(); init(); });
-
-function init() {
-  nodes = [];
-  const count = Math.floor((W * H) / 14000);
-  for (let i = 0; i < count; i++) {
-    nodes.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - .5) * .35,
-      vy: (Math.random() - .5) * .35,
-      r: Math.random() * 1.8 + .8
-    });
-  }
+function clock(){
+  const n=new Date();
+  document.getElementById('tb-time').textContent=
+    n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
-init();
-
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  const maxDist = 160;
-  nodes.forEach(n => {
-    n.x += n.vx; n.y += n.vy;
-    if (n.x < 0 || n.x > W) n.vx *= -1;
-    if (n.y < 0 || n.y > H) n.vy *= -1;
-  });
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < maxDist) {
-        const alpha = (1 - dist/maxDist) * .35;
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
-        ctx.lineWidth = .7;
-        ctx.stroke();
-      }
-    }
-  }
-  nodes.forEach(n => {
-    ctx.beginPath();
-    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,212,255,0.7)';
-    ctx.fill();
-  });
-  requestAnimationFrame(draw);
-}
-draw();
+clock();setInterval(clock,1000);
 </script>
 </body>
 </html>
