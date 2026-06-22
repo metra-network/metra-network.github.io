@@ -349,14 +349,67 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
 .devis-box h3{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.35rem}
 .devis-box p{font-size:.82rem;color:var(--gray);line-height:1.65;margin-bottom:1rem}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .home-grid,.about-grid,.zone-grid,.info-grid{grid-template-columns:1fr}
-  .why-grid{grid-template-columns:repeat(2,1fr)}
-  .stat-row{grid-template-columns:repeat(2,1fr)}
-  html,body{overflow:auto}
+/* ── RESPONSIVE MOBILE ── */
+@media(max-width:768px){
+  html,body{height:100%;overflow:hidden}
+  body{flex-direction:column}
   #sidebar{display:none}
-  #tabs{overflow-x:auto}
+  #tabs{display:none}
+  #topbar{padding:0 1rem;gap:.7rem;height:52px}
+  .tb-sep,.tb-page,.tb-time{display:none}
+  .tb-badge{font-size:.65rem;padding:.2rem .65rem}
+  #main{height:100%;overflow:hidden}
+  #content{flex:1;overflow-y:auto;padding:1rem;padding-bottom:80px;-webkit-overflow-scrolling:touch}
+  #mobile-nav{
+    position:fixed;bottom:0;left:0;right:0;z-index:100;
+    background:var(--sidebar);border-top:1px solid var(--border);
+    display:flex;align-items:center;height:62px;padding:0 .5rem;gap:.2rem;
+  }
+  .mn-btn{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:.25rem;padding:.4rem .2rem;border:none;background:transparent;
+    color:var(--gray);cursor:pointer;border-radius:8px;transition:background .18s,color .18s;min-width:0;
+  }
+  .mn-btn.active{color:var(--cyan);background:rgba(0,184,230,.1)}
+  .mn-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .mn-label{font-size:.6rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .mn-cta{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:.25rem;padding:.4rem .2rem;border:none;
+    background:linear-gradient(135deg,var(--blue),var(--cyan));
+    color:#fff;cursor:pointer;border-radius:8px;transition:opacity .18s;
+  }
+  .mn-cta svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .mn-cta .mn-label{color:#fff}
+  .hero{padding:1.3rem 1.1rem 1.1rem}
+  .hero h1{font-size:1.7rem}
+  .hero-sub{font-size:.83rem}
+  .hero-diploma{font-size:.73rem;flex-wrap:wrap}
+  .hero-actions{flex-direction:column;gap:.6rem}
+  .btn-p,.btn-s{width:100%;justify-content:center;font-size:.85rem}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .stat-n{font-size:1.5rem}
+  .home-grid,.about-grid,.zone-grid,.info-grid,.svc-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
+  .why-card{padding:.9rem .8rem}
+  .why-ic{font-size:1.3rem}
+  .why-card h4{font-size:.78rem}
+  .why-card p{font-size:.7rem}
+  .svc-card{padding:1.1rem}
+  .page-title{font-size:1.25rem}
+  .card-title{font-size:.85rem}
+  .hours-row{flex-direction:column;align-items:flex-start;gap:.2rem;padding:.5rem 0}
+  .hours-time{font-size:.8rem}
+  .contact-wrap{max-width:100%}
+  .skill-name{min-width:110px;font-size:.75rem}
+  .pname{font-size:1.1rem}
+  .tb-brand{font-size:1rem}
+}
+@media(max-width:380px){
+  .hero h1{font-size:1.45rem}
+  .tb-badge{display:none}
+  .mn-label{display:none}
+  #mobile-nav{padding:0 .3rem}
 }
 </style>
 </head>
@@ -365,8 +418,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
 <!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="sb-logo" onclick="showPanel('home')">
-    <img id="logo-img" src="image.png" alt="Logo" style="display:block">
-    <div class="sb-logo-text" id="logo-text" style="display:none">MN</div>
+    <img id="logo-img" src="" alt="Logo">
+    <div class="sb-logo-text" id="logo-text">MN</div>
   </div>
   <div class="sb-divider"></div>
   <button class="sb-btn active" data-panel="home" onclick="showPanel('home')">
@@ -563,20 +616,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
           <p>Interventions à distance disponibles partout en France. Prise en main à distance pour logiciels, diagnostic et conseils.</p>
         </div>
         <div class="hours-card">
-          <h3>Horaires — Sur site <span style="color:var(--cyan)">(Marseille)</span></h3>
-          <div class="hours-row">
-            <span class="hours-type">Interventions continues</span>
-            <span class="hours-time">10h00 – 17h00 non stop</span>
-          </div>
-          <p class="hours-note">Dépannages et grosses interventions : matériel, installation, configuration.</p>
-        </div>
-        <div class="hours-card">
           <h3>Horaires — À distance</h3>
           <div class="hours-row">
             <span class="hours-type">Lundi – Vendredi</span>
             <span class="hours-time">08h00 – 12h00 · 14h00 – 17h00</span>
           </div>
           <p class="hours-note">Prise en main à distance : logiciels, diagnostic, conseils.</p>
+        </div>
+        <div class="hours-card">
+          <h3>Horaires — Sur site <span style="color:var(--cyan)">(Marseille)</span></h3>
+          <div class="hours-row">
+            <span class="hours-type">Interventions continues</span>
+            <span class="hours-time">10h00 – 17h00 non stop</span>
+          </div>
+          <p class="hours-note">Dépannages et grosses interventions : matériel, installation, configuration.</p>
         </div>
       </div>
 
@@ -593,7 +646,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
 
     <!-- À PROPOS -->
     <div class="panel" id="panel-about">
-      <p class="page-title">À propos de <span>Moi</span></p>
+      <p class="page-title">À propos de <span>Mhamadi Nayb</span></p>
       <div class="about-grid">
         <div class="profile-card">
           <div class="avatar">
@@ -601,7 +654,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
             <span id="profile-initials">MN</span>
           </div>
           <div class="pname">Mhamadi Nayb</div>
-          <div class="prole">Technicien Supérieur Systèmes & Réseaux · Fondateur Metra Network</div>
+          <div class="prole">Technicien Systèmes & Réseaux · Fondateur Metra Network</div>
           <div class="pdiploma">
             🎓 Diplômé BTS SIO option SISR (BAC+2)<br>
             Lycée Victor Hugo · Marseille
@@ -634,16 +687,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
             <div class="skills-label">Services & Protocoles</div>
             <div class="tag-cloud">
               <span class="tag">DNS / DHCP</span>
-              <span class="tag">Sauvegarde</span>
+              <span class="tag">NAS / Sauvegarde</span>
               <span class="tag">Accès à distance</span>
-              <span class="tag">Service de Fichier</span>
+              <span class="tag">Messagerie</span>
             </div>
           </div>
           <div class="skills-section">
             <div class="skills-label">Cybersécurité</div>
             <div class="tag-cloud">
-              <span class="tag">Détection</span>
-              <span class="tag">Surveillance Réseau</span>
+              <span class="tag">Pare-feu</span>
+              <span class="tag">Audit sécurité</span>
               <span class="tag">Chiffrement</span>
               <span class="tag">Bonnes pratiques</span>
             </div>
@@ -653,22 +706,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
             <div class="cert-item">
               <div class="cert-dot"></div>
               BTS SIO SISR – Lycée Victor Hugo, Marseille
-            </div>
-            <div class="cert-item">
-              <div class="cert-dot"></div>
-              Certification Cisco CCNA 1 Introduction Réseau – Cisco Networking Academy
-            </div>
-            <div class="cert-item">
-              <div class="cert-dot"></div>
-              Certification Cisco CCNA 2 Switching Routing Wireless Essential – Cisco Networking Academy
-            </div>
-            <div class="cert-item">
-              <div class="cert-dot"></div>
-              Certification Cisco CyberOps Associate – Cisco Networking Academy
-            </div>
-            <div class="cert-item">
-              <div class="cert-dot"></div>
-              Certification Cisco Network Basic – Cisco Networking Academy
             </div>
           </div>
         </div>
@@ -709,7 +746,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);disp
 const labels={home:'Accueil',services:'Services',zone:'Zone & Horaires',about:'À propos',contact:'Contact'};
 function showPanel(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab,.sb-btn').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab,.sb-btn,.mn-btn').forEach(el=>el.classList.remove('active'));
   const p=document.getElementById('panel-'+name);
   if(p)p.classList.add('active');
   document.querySelectorAll('[data-panel="'+name+'"]').forEach(el=>el.classList.add('active'));
@@ -722,6 +759,39 @@ function clock(){
     n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
 clock();setInterval(clock,1000);
+// Afficher nav mobile uniquement sur mobile
+function checkMobile(){
+  const nav=document.getElementById('mobile-nav');
+  if(!nav)return;
+  nav.style.display=window.innerWidth<=768?'flex':'none';
+}
+window.addEventListener('resize',checkMobile);
+window.addEventListener('DOMContentLoaded',checkMobile);
+if(document.readyState==='complete'||document.readyState==='interactive'){checkMobile();}
 </script>
+
+<!-- NAV MOBILE BAS -->
+<nav id="mobile-nav" style="display:none">
+  <button class="mn-btn active" data-panel="home" onclick="showPanel('home')">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="mn-label">Accueil</span>
+  </button>
+  <button class="mn-btn" data-panel="services" onclick="showPanel('services')">
+    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    <span class="mn-label">Services</span>
+  </button>
+  <button class="mn-btn" data-panel="zone" onclick="showPanel('zone')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    <span class="mn-label">Zone</span>
+  </button>
+  <button class="mn-btn" data-panel="about" onclick="showPanel('about')">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="mn-label">À propos</span>
+  </button>
+  <button class="mn-cta" onclick="showPanel('contact')">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="mn-label">Contact</span>
+  </button>
+</nav>
 </body>
 </html>
